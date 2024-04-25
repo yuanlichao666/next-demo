@@ -11,11 +11,10 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
   const allPages = generatePagination(currentPage, totalPages);
-
+  const pathName = usePathname();
   const createPageURL = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', page.toString());
-    const pathName = usePathname();
     return `${pathName}?${params.toString()}`;
   };
 
@@ -43,7 +42,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
               return (
                 <PaginationNumber
                   key={page}
-                  href={createPageURL(page)}
+                  href={createPageURL(page as number)}
                   page={page}
                   position={position}
                   isActive={currentPage === page}
